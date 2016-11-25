@@ -9,7 +9,7 @@ import multiprocessing as mp
 import sys, os, io, re
 import cPickle as pickle
 from nltk import word_tokenize
-sys.path.append('/home/zander/SSD/HISQA/src/py_module/')
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))), 'src/py_module' ))
 import QAData
 import virtuoso
 
