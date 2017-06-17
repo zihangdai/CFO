@@ -124,7 +124,7 @@ function BiGRU:updateOutput(input)
 
     if cutorch then
         -- set back the stream to default stream (0):
-        cutorch.setDefaultStream()
+        cutorch.setStream(0)
 
         -- 0 is default stream, let 0 wait for the 2 streams to complete before doing anything further
         cutorch.streamWaitFor(0, self.streamList)
@@ -227,7 +227,7 @@ function BiGRU:updateGradInput(input, gradOutput)
 
     if cutorch then
         -- set back the stream to default stream (0):
-        cutorch.setDefaultStream()
+        cutorch.setStream(0)
 
         -- 0 is default stream, let 0 wait for the 2 streams to complete before doing anything further
         cutorch.streamWaitFor(0, self.streamList)

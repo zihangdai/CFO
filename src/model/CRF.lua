@@ -76,7 +76,8 @@ function CRF:viterbi(input)
             self.tempMat:add(repAlpha[i-1])
         end
         
-        self.alpha[i], self.beta[i] = torch.max(self.tempMat, 2)
+        val, idx = torch.max(self.tempMat, 2)
+        self.alpha[i], self.beta[i] = val, idx:typeAs(self.beta[i])
     end        
 
     self.output:resize(seqLen, batchSize, 1):zero()

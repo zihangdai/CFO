@@ -3,7 +3,7 @@ ROOTDIR=`pwd`
 KBPATH=${ROOTDIR}/KnowledgeBase/VirtuosoKB/
 
 # 1. download SimpleQuestionv2
-echo "download raw data"
+echo "====> Step 1: download raw data"
 mkdir -p ${ROOTDIR}/RawData
 cd ${ROOTDIR}/RawData
 
@@ -14,15 +14,15 @@ wget https://www.dropbox.com/s/dt4i1a1wayks43n/FB5M-extra.tar.gz
 tar -xzf FB5M-extra.tar.gz
 
 # 2. create KB data
-echo "create KB data"
+echo "====> Step 2: create KB data"
 cd ${ROOTDIR}/KnowledgeBase
 python convert.py ${ROOTDIR}/RawData/SimpleQuestions_v2/freebase-subsets/freebase-FB5M.txt
 
 mv FB5M.core.txt ${KBPATH}/data/
 mv ${ROOTDIR}/RawData/FB5M.*.txt ${KBPATH}/data/
- 
+
 # 3. load data into knowledge base
-echo "load data into knowledge base"
+echo "====> Step 3: load data into knowledge base"
 cd ${KBPATH}
 ./bin/virtuoso-t +foreground +configfile var/lib/virtuoso/db/virtuoso.ini & # start the server
 serverPID=$!
@@ -38,15 +38,14 @@ done
 for pid in ${pids[@]}; do
      wait $pid
 done
-     
 
 # 4. create Vocabs
-echo "create Vocabs"
+echo "====> Step 4: create Vocabs"
 cd ${ROOTDIR}/vocab
 th create_vocab.lua 
 
-# 5. create training data
-echo "create training data"
+5. create training data
+ho "====> Step 5: create training data (this will take some time)"
 
 # 5.1. QAData.pkl
 cd ${ROOTDIR}/SimpleQuestions/PreprocessData

@@ -140,7 +140,7 @@ for i = 1, maxIters do
     local predict = model:forward(seq)
 
     -------------------------- criterion --------------------------
-    local loss = criterion:forward(predict, labels)    
+    local loss = criterion:forward(predict, labels)
     sumLoss = sumLoss + loss
 
     local hardPred = torch.ge(predict, 0.5)
