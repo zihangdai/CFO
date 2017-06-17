@@ -64,7 +64,7 @@ vi var/lib/virtuoso/db/virtuoso.ini
     # default 
     DirsAllowed = ., ${INSTALLPATH}/share/virtuoso/vad
     # modified
-    DirsAllowed = ., ${INSTALLPATH}/share/virtuoso/vad, ${INSTALLPATH}/share/virtuoso/vad
+    DirsAllowed = ., ${INSTALLPATH}/share/virtuoso/vad, ${INSTALLPATH}/data
 
   # 2. MaxQueryMem : maximum memory virtuoso can use to handle queries. 
   # Intuitively, the larger the MaxQueryMem, the potentially faster the query. 
