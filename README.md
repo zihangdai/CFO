@@ -10,7 +10,7 @@ Code repo for [Conditional Focused Neural Question Answering with Large-scale Kn
 
 # Training
 
-1. Focused Lableing
+1. Focused Labeling
 
    ```python
    cd FocusedLabeling
