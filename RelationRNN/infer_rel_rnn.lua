@@ -7,8 +7,7 @@ cmd:text()
 cmd:text('Options')
 cmd:option('-useGPU',1,'whether to use gpu for computation')
 cmd:option('-modelFile','model.rel.stackBiRNN','file path for saved model')
-cmd:option('-testData','valid.single.label','run test on which data set')
-cmd:option('-KG','FB5M','suffix appended to the output file name')
+cmd:option('-testData','inference-data/rel.single.valid.t7','run test on which data set')
 cmd:text()
 
 -- parse input params
@@ -23,14 +22,16 @@ if opt.useGPU > 0 then
 end
 
 -- load all models
-local suffix = stringx.split(opt.modelFile, '.')
-suffix = suffix[#suffix]
+local fields = stringx.split(opt.testData, '.')
+local ncand = fields[#fields-2]
+local split = fields[#fields-1]
+
 local model = torch.load(opt.modelFile)
 
 -- init data loader and output files
-local loader = RankingDataLoader(string.format('data/%s.%s.torch', opt.testData, opt.KG), flog)
-local score_file = io.open(string.format('score.%s.%s', opt.testData, opt.KG, suffix), 'w')
-local rank_file  = io.open(string.format('rank.%s.%s', opt.testData, opt.KG, suffix), 'w')
+local loader = RankingDataLoader(opt.testData, flog)
+local score_file = io.open(string.format('score.rel.%s.%s', ncand, split), 'w')
+local rank_file  = io.open(string.format('rank.rel.%s.%s', ncand, split), 'w')
 
 -- extract sub models
 local relEmbed   = model.relEmbed

@@ -131,7 +131,7 @@ if __name__ == '__main__':
         ent_score_fn = sys.argv[3]
     else:
         print 'Wrong arguments. Usage: '
-        print '  python joint_disambiguation.py cpickle_file score_file'
+        print '  python joint_disambiguation.py cpickle_file rel_score_file ent_score_file'
         sys.exit(1)
 
     chosen_subs = 0

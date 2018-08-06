@@ -7,8 +7,8 @@ cmd:text()
 cmd:text('Comandline Options')
 
 cmd:option('-wordVocab','../vocab/vocab.word.t7','training data file')
-cmd:option('-testData','test.t7','training data file')
-cmd:option('-modelFile','model/model.BiGRU','filename for loading trained model')
+cmd:option('-testData','inference-data/label.valid.t7','data file to predict')
+cmd:option('-modelFile','model/model.BiGRU','path to the trained model')
 
 cmd:option('-useGPU',1,'which GPU is used for computation')
 
@@ -28,7 +28,7 @@ if opt.useGPU > 0 then
 end
 
 ----------------------------- Data Loader -----------------------------
-local loader = SequenceLoader(string.format("data/%s", opt.testData)) 
+local loader = SeqLabelingLoader(opt.testData, flog)
 
 -------------------------- Load & Init Models -------------------------
 local model = torch.load(opt.modelFile)
@@ -40,12 +40,15 @@ linearCRF:evaluate()
 ----------------------------- Prediction -----------------------------
 local maxIters = loader.numBatch
 
-local file = io.open(string.format("result.%s", opt.testData), 'w')
+local fields = stringx.split(opt.testData, '.')
+local split = fields[#fields-1]
+local file = io.open(string.format("label.result.%s", split), 'w')
+
 for i = 1, maxIters do
     xlua.progress(i, maxIters)
 
     ----------------------- load minibatch ------------------------
-    local seq = loader:nextBatch(1)
+    local seq, _ = loader:nextBatch(1)
     local currSeqLen = seq:size(1)
     local seqVec = seqModel:forward(seq)
     local predict = linearCRF:forward(seqVec)
