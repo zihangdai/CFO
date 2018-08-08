@@ -40,7 +40,7 @@ In the following, define `SPLIT='valid' or 'test'`.
    
    python generate_inference_data.py --split ${SPLIT}
    
-   th process_inference.lua
+   th process_inference.lua -testSplit ${SPLIT}
    th infer_crf.lua \
        -testData inference-data/label.${SPLIT}.t7 \
        -modelFile "path-to-pretrained-model"
