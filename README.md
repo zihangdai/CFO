@@ -45,7 +45,9 @@ In the following, define `SPLIT='valid' or 'test'`.
        -testData inference-data/label.${SPLIT}.t7 \
        -modelFile "path-to-pretrained-model"
    ```
-   This step will generate the file `label.result.${SPLIT}` in the folder `FocusedLabeling`.
+   - `python generate_inference_data.py --split ${SPLIT}` will create the file `FocusedLabeling/inference-data/label.${SPLIT}.txt`
+   - `th process_inference.lua` will turn the text file `label.${SPLIT}.txt` into `label.${SPLIT}.t7` in torch format (both in the folder `FocusedLabeling/inference-data`)
+   - Finally, `th infer_crf.lua ...`  will generate the file `label.result.${SPLIT}` in the folder `FocusedLabeling`.
 
 2. Query candidates based on focused labeling
 
