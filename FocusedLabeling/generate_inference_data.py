@@ -19,4 +19,8 @@ if __name__ == '__main__':
     with io.open('inference-data/label.{}.txt'.format(args.split), 'w', encoding='utf8') as fo:
         for data in data_list:
             if data.text_attention_indices:
-                fo.write(u'%s\t%s\n' % (data.question, ' '.join([str(index) for index in data.text_attention_indices])))
+                fo.write(u'%s\t%s\n' % (data.question, 
+                    ' '.join([str(index) for index in data.text_attention_indices])))
+            else:
+                fo.write(u'%s\t%s\n' % (data.question, 
+                    ' '.join(['0' for _ in data.question.strip().split()])))
